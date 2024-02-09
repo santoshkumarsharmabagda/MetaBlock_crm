@@ -1,5 +1,14 @@
 import React, { Fragment, useState, useEffect, useContext } from "react";
-import { Col, Container, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Row,
+} from "reactstrap";
 import { Btn, H4, P } from "../AbstractElements";
 import {
   EmailAddress,
@@ -15,34 +24,38 @@ import man from "../assets/images/dashboard/profile.png";
 import CustomizerContext from "../_helper/Customizer";
 import OtherWay from "./OtherWay";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../userSlice";
 
 const Signin = ({ selected }) => {
   const [number, setNumber] = useState();
-  const [email, setEmail] = useState("test@gmail.com");
-  const [password, setPassword] = useState("test123");
+  // const [email, setEmail] = useState();
+  // const [password, setPassword] = useState();
   const [togglePassword, setTogglePassword] = useState(false);
   const history = useNavigate();
   const { layoutURL } = useContext(CustomizerContext);
-
+  const navigate = useNavigate();
   const [value, setValue] = useState(localStorage.getItem("profileURL" || man));
   const [name, setName] = useState(localStorage.getItem("Name"));
-
+  const { isAuthenticated, error, isLoading, userData } = useSelector(
+    (state) => state.custom2
+  );
   useEffect(() => {
     localStorage.setItem("profileURL", man);
     localStorage.setItem("Name", "Emay Walter");
   }, [value, name]);
 
-  const loginAuth = async (e) => {
-    e.preventDefault();
-    setValue(man);
-    setName("Emay Walter");
-    if (email === "test@gmail.com" && password === "test123") {
-      localStorage.setItem("login", JSON.stringify(true));
-      history(`${process.env.PUBLIC_URL}/dashboard/default/${layoutURL}`);
-      toast.success("Successfully logged in!..");
-    } else {
-      toast.error("You enter wrong password or username!..");
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
     }
+  }, [navigate, isAuthenticated, userData]);
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const dispatch = useDispatch();
+  const loginapi = async () => {
+    dispatch(login({ email, password }));
   };
 
   return (
@@ -61,7 +74,12 @@ const Signin = ({ selected }) => {
                   <P>{"Enter your number & password to login"}</P>
                   <FormGroup>
                     <Label className="col-form-label">{EmailAddress}</Label>
-                    <Input className="form-control" type="email" onChange={(e) => setEmail(e.target.value)} value={email} />
+                    <Input
+                      className="form-control"
+                      type="email"
+                      onChange={(e) => setEmail(e.target.value)}
+                      value={email}
+                    />
                   </FormGroup>
                   <FormGroup className="position-relative">
                     <Label className="col-form-label">{Password}</Label>
@@ -94,15 +112,15 @@ const Signin = ({ selected }) => {
                     >
                       {ForgotPassword}
                     </Link>
-                    <Btn
+                    <Button
+                      onClick={loginapi}
                       attrBtn={{
                         color: "primary",
                         className: "d-block w-100 mt-2",
-                        onClick: (e) => loginAuth(e),
                       }}
                     >
                       {SignIn}
-                    </Btn>
+                    </Button>
                   </div>
                   <OtherWay />
                 </Form>

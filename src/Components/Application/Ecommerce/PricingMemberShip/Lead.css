@@ -20,12 +20,7 @@ flex-direction: column !important;
 }
 
 
-@media(max-width:768px){
-    .addleadsbutton{
-        
-    }
-      
-}
+
 
 
 
@@ -49,14 +44,24 @@ flex-direction: column !important;
     .leadssearchbtn{
         width: 76px;
     }
-    
+    .mytables {
+        width: auto !important;
+        min-width: 260%;
+        overflow-x: scroll;
+    }
+    th{
+        width: 280px !important;
+    }
+    .myTable-1{
+        width: 150% !important;
+        }
 }
 
 
 
 
 th{
-    width: 210px !important;
+    width: 280px !important;
 }
 
 .dailytasktable-1{
@@ -66,16 +71,16 @@ th{
 }
 
 .myTable-1{
-width: 120% !important;
+width: 150% !important;
 }
 
 .mytables {
     width: auto !important;
-    min-width: 180%;
+    min-width: 260%;
     overflow-x: scroll;
 }
 
 .myTable-1 thead tr{    
-    width: 210px !important;
+    width: 250px !important;
 }
 

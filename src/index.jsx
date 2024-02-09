@@ -6,23 +6,27 @@ import "./i18n";
 import reportWebVitals from "./reportWebVitals";
 import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Provider } from "react-redux";
+import store from "./store";
 const Root = () => {
   return (
     <div className="App">
-       {/* <NextUIProvider>
+      {/* <NextUIProvider>
     </NextUIProvider> */}
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
       <ToastContainer
-      position="top-right"
-      autoClose={2000}
-      hideProgressBar
-      newestOnTop={true}
-      closeOnClick
-      draggable
-      pauseOnHover
-      theme="colored"
-      transition={Flip}
-    />
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Flip}
+      />
     </div>
   );
 };
