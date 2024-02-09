@@ -1,0 +1,12 @@
+.myTablerefrel{
+    width: auto !important;
+    min-width: 180%;
+    overflow-x: scroll;
+
+}
+
+.pagination-first{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 9px;
+}
