@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Facebook, Linkedin, Twitter } from "react-feather";
 import { Form, FormGroup, Input, Label, Row, Col, Button } from "reactstrap";
 import { Btn, H4, P, H6, Image } from "../../../AbstractElements";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logoWhite from "../../../assets/images/logo/logo.png";
 import logoDark from "../../../assets/images/logo/logo_dark.png";
 import { Select } from "@mui/material";
@@ -11,7 +11,7 @@ const RegisterFrom = ({ logoClassMain }) => {
   const [inviteCode, setInviteCode] = useState("refId")
   const [ref, setRef] = useState();
   const [showOtpInput, setShowOtpInput] = useState(false);
-
+const location = useLocation()
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const refParam = searchParams.get("ref");

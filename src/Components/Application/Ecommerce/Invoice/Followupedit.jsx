@@ -188,8 +188,6 @@ export default function Followupedit ( productTypeData,) {
           <Input
             type="text"
             placeholder="Enter commission"
-            value={otherValue}
-            onChange={handleInputChange}
             style={{ width: "100%", height: "42px" , marginTop:"15px" }}
           
           />

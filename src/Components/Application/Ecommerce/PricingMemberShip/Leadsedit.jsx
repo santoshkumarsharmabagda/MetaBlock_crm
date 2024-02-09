@@ -255,10 +255,7 @@ export default function Leadsedit(productTypeData, leadSourceData) {
     // Show input field if "Other" is selected
     setShowInput(selectedValue === "other");
   };
-  const handleSubmit = () => {
-    // Logic to create the table or perform any other action
-    setShowTable(true);
-  };
+  
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
   };
@@ -321,7 +318,7 @@ export default function Leadsedit(productTypeData, leadSourceData) {
              Edit Your Lead
             </h3>
 
-            <form style={{ padding: "10px 20px" }} onSubmit={handleSubmit}>
+            <form style={{ padding: "10px 20px" }}>
               <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-2 mt-2 ">
                 <div className="leadinput">
                   <div>

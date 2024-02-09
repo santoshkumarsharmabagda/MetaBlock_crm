@@ -93,13 +93,6 @@ const PricingMembershipContain = () => {
     // You may want to save the edited data to your state or API here
   };
 
-  // const handleInputChange = (e, key, index) => {
-  //   const { value } = e.target;
-  //   const newLeadsData = [...leadsdata];
-  //   newLeadsData[index][key] = value;
-  //   setLeadsData(newLeadsData);
-  // };
-
   const handleInputChange = (event, index, fieldName) => {
     console.log("Index:", index);
     console.log("Edited data:", leadsdata);
@@ -115,7 +108,6 @@ const PricingMembershipContain = () => {
     };
     console.log("New data after update:", newData);
     setLeadsData(newData);
-
   };
 
   const [sortOrder, setSortOrder] = useState("asc");
@@ -129,6 +121,15 @@ const PricingMembershipContain = () => {
     });
     setLeadsData(sortedData);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  };
+  const [ showAllLeads, setShowAllLeads ] = useState( true );
+  const handleAllLeadsClick = () => {
+    setShowAllLeads(true);
+  };
+
+  const handleTransferLeadsClick = () => {
+    setShowAllLeads(false);
+    // Fetch or set data for transferred leads here if needed
   };
 
   return (
@@ -146,10 +147,17 @@ const PricingMembershipContain = () => {
                 <div className="flex items-start mt-4 sm:mt-0 sm:ml-4">
                   <div className="addleadsbutton">
                     <div style={{ display: "flex", gap: "10px" }}>
-                      <Button color="primary">All Leads</Button>
-                      <Button color="primary">Transfear Leads</Button>
+                      <Button color="primary" onClick={handleAllLeadsClick}>
+                        All Leads
+                      </Button>
+                      <Button
+                        color="primary"
+                        onClick={handleTransferLeadsClick}
+                      >
+                        Transfear Leads
+                      </Button>
                     </div>
-                  
+
                     <Button
                       style={{ width: "100px" }}
                       className="py-2 px-2 flex items-center justify-center text-xs focus:outline-none"
@@ -157,7 +165,6 @@ const PricingMembershipContain = () => {
                     >
                       Add
                     </Button>
-                    
                   </div>
                 </div>
               </div>
@@ -212,106 +219,112 @@ const PricingMembershipContain = () => {
               </div>
 
               <div className="dailytasktable" style={{ overflowX: "auto" }}>
-                <Table className="mytables" id="myTable">
-                  <thead>
-                    <tr>
-                      <th>
-                        {/* <input type="checkbox" onChange={handleSelectAll} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        User
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        Leads
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        Source
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        FollowUp
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        Products
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        Sell product
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        Sell Date
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        Taken From Other
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        1st Description
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        Address
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        Lead Creator
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th onClick={sortByUserNameone}>
-                        Created At
-                        <FaSort style={{ color: "#BABABA" }} />
-                        {/* <FaSort style={{color:"#BABABA"}} /> */}
-                      </th>
-                      <th>Edit</th>
-                      <th>View</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredleadsdata.map((item, index) => (
-                      <tr key={index}>
-                        <td>
-                          <input
-                            type="checkbox"
-                            onChange={handleCheckboxChange}
-                          />
-                        </td>
-                        <td>{item.User}</td>
-                        <td>{item.Leads}</td>
-                        <td>{item.Source}</td>
-                        <td>{item.FollowUp}</td>
-                        <td>{item.Products}</td>
-                        <td>{item.Sellproduct}</td>
-                        <td>{item.SellDate}</td>
-                        <td>{item.TakenFromOther}</td>
-                        <td>{item.Description}</td>
-                        <td>{item.Address}</td>
-                        <td>{item.LeadCreator}</td>
-                        <td>{item.CreatedAt}</td>
+                {showAllLeads ? (
+               <Table className="mytables" id="myTable">
+               <thead>
+                 <tr>
+                   <th>
+                     {/* <input type="checkbox" onChange={handleSelectAll} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     User
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     Leads
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     Source
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     FollowUp
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     Products
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     Sell product
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     Sell Date
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     Taken From Other
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     1st Description
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     Address
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     Lead Creator
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th onClick={sortByUserNameone}>
+                     Created At
+                     <FaSort style={{ color: "#BABABA" }} />
+                     {/* <FaSort style={{color:"#BABABA"}} /> */}
+                   </th>
+                   <th>Edit</th>
+                   <th>View</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 {filteredleadsdata.map((item, index) => (
+                   <tr key={index}>
+                     <td>
+                       <input
+                         type="checkbox"
+                         onChange={handleCheckboxChange}
+                       />
+                     </td>
+                     <td>{item.User}</td>
+                     <td>{item.Leads}</td>
+                     <td>{item.Source}</td>
+                     <td>{item.FollowUp}</td>
+                     <td>{item.Products}</td>
+                     <td>{item.Sellproduct}</td>
+                     <td>{item.SellDate}</td>
+                     <td>{item.TakenFromOther}</td>
+                     <td>{item.Description}</td>
+                     <td>{item.Address}</td>
+                     <td>{item.LeadCreator}</td>
+                     <td>{item.CreatedAt}</td>
 
-                        <td>
-                        <Leadsedit/>
-                        </td>
-                        <td><ViewLeads/></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                     <td>
+                     <Leadsedit/>
+                     </td>
+                     <td><ViewLeads/></td>
+                   </tr>
+                 ))}
+               </tbody>
+             </Table>
+                ) : (
+                  <Table className="mytables" id="myTable">
+                    {/* Table headers and rows for transferred leads */}
+                  </Table>
+                )}
               </div>
               <div className="flex justify-center mt-5">
                 <div style={{ display: "flex", gap: "10px" }} className="">

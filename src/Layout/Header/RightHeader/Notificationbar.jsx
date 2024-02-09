@@ -11,8 +11,7 @@ import {
 import { useNavigate } from "react-router";
 
 const Notificationbar = () => {
-  4;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <li className="onhover-dropdown">
